@@ -8,15 +8,6 @@
 $ npm install
 ```
 
-## Create docker container
-```bash
-#create docker container
-$ docker compose up -d
-
-#sync Prisma schema
-$ npx prisma db push
-```
-
 ## Compile and run the project
 
 ```bash

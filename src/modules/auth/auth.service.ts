@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from 'bcryptjs';
 import { randomInt } from 'crypto';
 
 import { RegisterDto, RegisterSchema } from './dtos/register.dto';

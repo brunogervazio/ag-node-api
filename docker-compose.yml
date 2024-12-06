@@ -1,17 +1,34 @@
-version: '3.8'
 services:
-  postgres:
-    image: postgres:10.3
-    container_name: postgres_container
+  database:
+      image: postgres:10.3
+      container_name: database
+      restart: always
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root@123
+        POSTGRES_DB: mydb
+      ports:
+        - '5432:5432'
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+  node:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: node
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root@123
-      POSTGRES_DB: mydb
+      - PORT=3000
+      - HOST=localhost
+      - SECRET_KEY=7e5b536de433b68d420385abb1019ba0060c3d5f1b5c9aa694810798a8aa2fb6
+      - DATABASE_URL=postgresql://root:root@123@database:5432/mydb
+    depends_on:
+      - database
     ports:
-      - '5432:5432'
+      - "3000:3000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - .:/app
 
 volumes:
   postgres_data:
